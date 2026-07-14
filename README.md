@@ -579,7 +579,7 @@
       <p>Veloz Móvil es una empresa dedicada a la venta y financiamiento de vehículos nuevos y usados, con la mejor calidad y los mejores precios del mercado en Santiago. Contamos con un inventario amplio y variado, y nuestro equipo de asesores está listo para ayudarte a encontrar el vehículo ideal para ti.</p>
       <div class="stat-row">
         <div class="stat"><b id="brandCount">0</b><span>Marcas disponibles</span></div>
-        <div class="stat"><b>Miembro</b><span>ANADIVE</span></div>
+        <div class="stat"><b>Miembro</b><span><img src="anadive.jpg" alt="ANADIVE" style="height:28px;width:auto;display:block;margin-top:4px;"></span></div>
         <div class="stat"><b id="vehicleCount">0</b><span>Vehículos en inventario</span></div>
       </div>
     </div>
@@ -687,6 +687,7 @@
 <footer>
   <div class="wrap">
     <p>© 2026 Veloz Móvil S.R.L. Todos los derechos reservados.</p>
+    <p style="font-size:11px;opacity:.5;">Desarrollado por <b>Aferros, S.R.L.</b></p>
     <div class="flinks">
       <a href="#inventario">Vehículos</a>
       <a href="#nosotros">Nosotros</a>
