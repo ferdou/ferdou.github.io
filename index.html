@@ -867,7 +867,8 @@ function initApp() {
 }
 
 function renderFeatured() {
-  const featured = VEHICLES.filter(v => v.tipo==='NUEVO').slice(0,3);
+  const nuevos = VEHICLES.filter(v => v.tipo==='NUEVO');
+  const featured = nuevos.length > 3 ? shuffleTake(nuevos, 3) : nuevos;
   const grid = document.getElementById('featuredGrid');
   grid.innerHTML = featured.map(v => `
     <div class="feat-card" onclick="openModal(${v.id})">
