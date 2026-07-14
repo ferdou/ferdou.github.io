@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_DO">
 <meta name="theme-color" content="#14161A">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+<link rel="icon" href="isologo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -50,16 +50,17 @@
 
   header{ position:sticky; top:0; z-index:100; background:var(--off); border-bottom:1px solid var(--line); }
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; min-height:0; padding:8px 32px; }
-  .logo img{ width:auto; height:auto; max-width:460px; max-height:161px; display:block; }
+  .logo{ display:flex; flex-direction:column; align-items:flex-start; gap:4px; line-height:1; }
+  .logo .logo-main{ max-width:240px; height:auto; display:block; }
+  .logo .logo-slogan{ max-width:180px; height:auto; display:block; }
   @media (max-width: 600px){
-    .logo img{ max-width:260px; max-height:90px; }
+    .logo .logo-main{ max-width:160px; }
+    .logo .logo-slogan{ max-width:130px; }
   }
   @media (max-width: 400px){
-    .logo img{ max-width:180px; max-height:60px; }
+    .logo .logo-main{ max-width:120px; }
+    .logo .logo-slogan{ max-width:100px; }
   }
-  .logo{ font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:26px; letter-spacing:0.01em; display:flex; align-items:baseline; gap:2px; }
-  .logo .veloz{ color:var(--ink); }
-  .logo .movil{ color:var(--red); }
   .nav-links{ display:flex; gap:34px; }
   .nav-links a{ font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; padding:8px 0; border-bottom:2px solid transparent; transition:color .2s,border-color .2s; }
   .nav-links a:hover{ color:var(--red); border-color:var(--red); }
@@ -203,11 +204,11 @@
 
   .modal-overlay{ display:none; position:fixed; inset:0; z-index:200; background:rgba(20,22,26,0.8); backdrop-filter:blur(4px); align-items:center; justify-content:center; }
   .modal-overlay.open{ display:flex; }
-  .modal{ background:var(--off); max-width:720px; width:90%; max-height:90vh; overflow-y:auto; position:relative; animation:fadeUp .3s ease; }
+  .modal{ background:var(--off); max-width:760px; width:95%; max-height:95vh; overflow-y:auto; position:relative; animation:fadeUp .3s ease; }
   @keyframes fadeUp{ from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
   .modal-close{ position:absolute; top:12px; right:16px; background:none; border:none; font-size:28px; cursor:pointer; color:var(--ink); z-index:3; line-height:1; transition:color .2s; }
   .modal-close:hover{ color:var(--red); }
-  .modal img{ width:100%; height:280px; object-fit:cover; }
+  .modal .gallery-main img{ width:100%; height:100%; object-fit:cover; display:block; }
   .modal-body{ padding:28px; }
   .modal-body h2{ font-size:26px; text-transform:none; letter-spacing:normal; font-family:'Inter',sans-serif; }
   .modal-body .modal-price{ font-family:'JetBrains Mono',monospace; color:var(--red-dim); font-weight:600; font-size:24px; margin-top:6px; }
@@ -221,7 +222,36 @@
   .modal-body .modal-actions .btn-outline{ border:1px solid var(--ink); color:var(--ink); }
   .modal-body .modal-actions .btn-outline:hover{ background:var(--ink); color:#fff; }
 
-  .hamburger{ display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:4px; }
+  .modal-gallery{ position:relative; background:var(--graphite); }
+  .gallery-main{ position:relative; width:100%; height:340px; overflow:hidden; background:var(--graphite); }
+  .gallery-main img{ width:100%; height:100%; object-fit:contain; display:block; transition:opacity .3s; }
+  .gallery-nav{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); color:#fff; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:background .2s; z-index:2; }
+  .gallery-nav:hover{ background:rgba(0,0,0,0.8); }
+  .gallery-prev{ left:12px; }
+  .gallery-next{ right:12px; }
+  .gallery-counter{ position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.6); color:#fff; font-family:'JetBrains Mono',monospace; font-size:11px; padding:3px 10px; border-radius:20px; z-index:2; }
+  .gallery-thumbs{ display:flex; gap:4px; padding:6px 8px; overflow-x:auto; background:var(--graphite); }
+  .gallery-thumbs img{ width:64px; height:48px; object-fit:cover; cursor:pointer; border:2px solid transparent; transition:border-color .2s,opacity .2s; flex-shrink:0; }
+  .gallery-thumbs img:hover{ opacity:.8; }
+  .gallery-thumbs img.active{ border-color:var(--red); }
+  .gallery-loading{ display:none; background:var(--graphite); color:var(--chrome); text-align:center; padding:60px 0; font-family:'JetBrains Mono',monospace; font-size:12px; }
+
+  .modal-body .modal-header{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:4px; }
+  .modal .modal-body .modal-header h2{ font-size:26px; text-transform:none; letter-spacing:normal; font-family:'Inter',sans-serif; }
+  .modal-body .modal-header .modal-price{ font-family:'JetBrains Mono',monospace; color:var(--red-dim); font-weight:600; font-size:24px; white-space:nowrap; }
+  .modal-specs{ display:grid; grid-template-columns:1fr 1fr; gap:4px; margin:16px 0; }
+  .modal-specs .spec-item{ display:flex; justify-content:space-between; padding:8px 12px; background:var(--off); border:1px solid var(--line); font-size:12.5px; }
+  .modal-specs .spec-item .spec-label{ color:#7a7d80; font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; }
+  .modal-specs .spec-item .spec-value{ font-weight:600; text-align:right; }
+  .modal-components{ display:flex; flex-direction:column; gap:4px; margin:12px 0; max-height:240px; overflow-y:auto; }
+  .modal-components .comp-tag{ font-size:12px; background:var(--off); border:1px solid var(--line); padding:6px 12px; border-radius:4px; color:#5c5f62; font-family:'JetBrains Mono',monospace; }
+  .modal-components .comp-tag::before{ content:'✓ '; color:var(--red); font-weight:700; }
+
+  [data-theme="light"] .gallery-main{ background:var(--line); }
+  [data-theme="light"] .gallery-thumbs{ background:var(--off); }
+  [data-theme="light"] .gallery-loading{ background:var(--off); color:var(--chrome); }
+  [data-theme="light"] .modal-gallery{ background:var(--off); }
+  [data-theme="light"] .modal-specs .spec-item{ background:#fff; }
   .hamburger span{ width:22px; height:2px; background:var(--ink); border-radius:2px; transition:transform .3s,opacity .3s; }
   .hamburger.open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
   .hamburger.open span:nth-child(2){ opacity:0; }
@@ -258,14 +288,14 @@
     .search-box{ grid-template-columns:1fr; }
     .search-box{ gap:12px; padding:18px; }
     .hero{ padding:40px 0 0; }
-    .hero h1{ font-size:30px; }
-    .hero-sub{ font-size:14px; }
     .stat-row{ flex-direction:column; gap:20px; }
     .test-grid{ grid-template-columns:1fr; }
     .modal img{ height:200px; }
     .modal-body{ padding:18px; }
     .modal-body h2{ font-size:20px; }
     .modal-body .modal-price{ font-size:20px; }
+    .gallery-main{ height:240px; }
+    .modal-specs{ grid-template-columns:1fr; }
     .contact-form-col{ padding:24px; }
     .info-col{ padding:24px; }
     .feat-card img{ height:140px; }
@@ -401,7 +431,7 @@
 
 <header>
   <nav class="wrap">
-    <a href="#inicio" class="logo"><img src="logo.png" alt="Veloz Móvil" width="460" height="161" style="display:block;"></a>
+    <a href="#inicio" class="logo"><img src="logo.png" alt="Veloz Móvil" class="logo-main"><img src="eslogan.png" alt="Eslogan Veloz Móvil" class="logo-slogan"></a>
     <div class="nav-links">
       <a href="#inicio">Inicio</a>
       <a href="#inventario">Vehículos</a>
@@ -667,11 +697,26 @@
 <div class="modal-overlay" id="vehicleModal">
   <div class="modal">
     <button class="modal-close" id="modalClose">&times;</button>
-    <img id="modalImg" src="" alt="">
+    <div class="modal-gallery" id="modalGallery">
+      <div class="gallery-main">
+        <img id="modalMainImg" src="" alt="">
+        <button class="gallery-nav gallery-prev" id="galleryPrev">&#10094;</button>
+        <button class="gallery-nav gallery-next" id="galleryNext">&#10095;</button>
+        <div class="gallery-counter" id="galleryCounter"></div>
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+    <div class="gallery-loading" id="galleryLoading">Cargando imágenes...</div>
     <div class="modal-body">
-      <h2 id="modalTitle"></h2>
-      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle"></h2>
+          <div class="modal-price" id="modalPrice"></div>
+        </div>
+      </div>
       <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <div class="modal-components" id="modalComponents"></div>
       <p id="modalDesc"></p>
       <div class="modal-actions">
         <a href="#" class="btn-primary" id="modalCta" target="_blank">Cotizar por WhatsApp</a>
@@ -684,8 +729,11 @@
 <script>
 let VEHICLES = [];
 let showingAll = false;
+let galleryIndex = 0;
+let galleryPhotos = [];
 const INITIAL_LIMIT = 6;
 const API_URL = 'https://www.supercarros.com/ApiDealers/AdsQuery?accKey=abc36a6f-471f-4b35-92b9-d6f60c302a50&customer=29799';
+const DETAIL_API_URL = 'https://www.supercarros.com/ApiDealers/AdsGet?accKey=abc36a6f-471f-4b35-92b9-d6f60c302a50&adId=';
 
 function shuffleTake(arr, n) {
   const copy = [...arr];
@@ -894,7 +942,6 @@ function renderInventory(list) {
 function openModal(id) {
   const v = VEHICLES.find(x => x.id === id);
   if (!v) return;
-  document.getElementById('modalImg').src = v.img;
   document.getElementById('modalTitle').textContent = `${v.marca} ${v.modelo}`;
   document.getElementById('modalPrice').textContent = `${v.moneda}${v.precio.toLocaleString('en-US')}`;
   document.getElementById('modalMeta').innerHTML = `
@@ -902,8 +949,100 @@ function openModal(id) {
   `;
   document.getElementById('modalDesc').textContent = v.desc;
   document.getElementById('modalCta').href = `https://wa.me/18297163438?text=${encodeURIComponent(`Hola, me interesa el ${v.marca} ${v.modelo} ${v.year} - ${v.moneda}${v.precio.toLocaleString('en-US')}. ¿Me pueden dar más información?`)}`;
+  document.getElementById('modalSpecs').innerHTML = '';
+  document.getElementById('modalComponents').innerHTML = '';
+  document.getElementById('galleryThumbs').innerHTML = '';
+  document.getElementById('galleryLoading').style.display = 'block';
+  document.getElementById('modalGallery').style.display = 'none';
   document.getElementById('vehicleModal').classList.add('open');
+  loadVehicleDetails(id);
 }
+
+async function loadVehicleDetails(id) {
+  const proxies = [
+    url => url,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`
+  ];
+  for (const proxy of proxies) {
+    try {
+      const res = await fetch(proxy(DETAIL_API_URL + id));
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!data) continue;
+
+      galleryPhotos = data.Photos || [];
+      if (galleryPhotos.length > 0) {
+        renderGallery();
+      } else {
+        document.getElementById('galleryLoading').textContent = 'Sin imágenes disponibles';
+      }
+
+      const specs = [];
+      if (data.Type) specs.push({ label:'Tipo', value:data.Type });
+      if (data.Engine) specs.push({ label:'Motor', value:data.Engine + (data.EngineType ? ' '+data.EngineType : '') + (data.EngineCylinders ? ' · '+data.EngineCylinders+' cil' : '') });
+      if (data.Transmission) specs.push({ label:'Transmisión', value:data.Transmission });
+      if (data.Traction) specs.push({ label:'Tracción', value:data.Traction });
+      if (data.Fuel) specs.push({ label:'Combustible', value:data.Fuel === 'HA-brido' ? 'Híbrido' : data.Fuel });
+      if (data.ColorExterior) specs.push({ label:'Color exterior', value:data.ColorExterior });
+      if (data.ColorInterior) specs.push({ label:'Color interior', value:data.ColorInterior });
+      if (data.Passengers) specs.push({ label:'Pasajeros', value:data.Passengers });
+      if (data.Doors) specs.push({ label:'Puertas', value:data.Doors });
+      if (data.Usage !== undefined && data.Usage !== null) specs.push({ label:'Kilometraje', value:data.Usage + ' ' + (data.UsageUnit || '') });
+      if (data.Year) specs.push({ label:'Año', value:data.Year });
+
+      document.getElementById('modalSpecs').innerHTML = specs.map(s =>
+        `<div class="spec-item"><span class="spec-label">${s.label}</span><span class="spec-value">${s.value}</span></div>`
+      ).join('');
+
+      const components = data.Components || [];
+      if (components.length > 0) {
+        document.getElementById('modalComponents').innerHTML = components.map(c =>
+          `<span class="comp-tag">${c.Name}</span>`
+        ).join('');
+      }
+
+      return;
+    } catch (_) {}
+  }
+  document.getElementById('galleryLoading').textContent = 'No se pudieron cargar los detalles';
+}
+
+function renderGallery() {
+  document.getElementById('galleryLoading').style.display = 'none';
+  document.getElementById('modalGallery').style.display = 'block';
+  galleryIndex = 0;
+  showGalleryImage(0);
+  const thumbs = document.getElementById('galleryThumbs');
+  thumbs.innerHTML = galleryPhotos.map((p, i) =>
+    `<img src="${p.PhotoUrlBig || p.PhotoUrl}" class="${i===0?'active':''}" onclick="showGalleryImage(${i})" alt="">`
+  ).join('');
+  document.getElementById('galleryCounter').textContent = `1 / ${galleryPhotos.length}`;
+}
+
+function showGalleryImage(idx) {
+  if (idx < 0) idx = galleryPhotos.length - 1;
+  if (idx >= galleryPhotos.length) idx = 0;
+  galleryIndex = idx;
+  const img = document.getElementById('modalMainImg');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = galleryPhotos[idx].PhotoUrlBig || galleryPhotos[idx].PhotoUrl;
+    img.style.opacity = '1';
+  }, 150);
+  document.getElementById('galleryCounter').textContent = `${idx+1} / ${galleryPhotos.length}`;
+  document.querySelectorAll('.gallery-thumbs img').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+    el.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+  });
+}
+
+document.getElementById('galleryPrev').addEventListener('click', () => showGalleryImage(galleryIndex - 1));
+document.getElementById('galleryNext').addEventListener('click', () => showGalleryImage(galleryIndex + 1));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' && document.getElementById('vehicleModal').classList.contains('open')) showGalleryImage(galleryIndex - 1);
+  if (e.key === 'ArrowRight' && document.getElementById('vehicleModal').classList.contains('open')) showGalleryImage(galleryIndex + 1);
+});
 
 function updateStats() {
   const brands = new Set(VEHICLES.map(v => v.marca));
