@@ -193,6 +193,8 @@
 
   footer{ background:var(--ink); border-top:1px solid var(--line-dark); padding:26px 0; color:var(--chrome); }
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  footer .footer-map{ width:100%; margin-bottom:16px; border-radius:4px; overflow:hidden; }
+  footer .footer-map iframe{ display:block; width:100%; height:220px; border:none; }
   footer p{ font-size:12px; opacity:.8; }
   footer .flinks{ display:flex; gap:20px; }
   footer .flinks a{ font-size:12px; }
@@ -686,6 +688,9 @@
 
 <footer>
   <div class="wrap">
+    <div class="footer-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3761.9469814352005!2d-70.67005623335085!3d19.457852570011138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb1c57f6876f375%3A0x60404a0f16c3f8fa!2sVeloz%20Movil!5e0!3m2!1sen!2sdo!4v1587941941402!5m2!1sen!2sdo" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
     <p>© 2026 Veloz Móvil S.R.L. Todos los derechos reservados.</p>
     <p style="font-size:11px;opacity:.5;">Desarrollado por <b>Aferros, S.R.L.</b></p>
     <div class="flinks">
